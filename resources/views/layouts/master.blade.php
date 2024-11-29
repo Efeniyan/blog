@@ -329,9 +329,10 @@
         <a href="/contact-us">Contactez-nous</a>
         <a href="/about">A propos de nous</a>
         <a href="/articles">Articles</a>
-        @auth
+
+        @can('see-admin-menu')
         <a href="/form">Ajoutez un article</a>
-        @endauth
+        @endcan
         @auth
         <a href="{{ route('profile') }}">Votre profil</a>
         <form action="{{ route('logout') }}" method="POST">
