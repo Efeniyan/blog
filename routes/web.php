@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Middleware\Admin;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use App\Http\Middleware\Admin;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -31,3 +33,22 @@ Route::get('/login', [SessionController::class, 'index'])->name('login')->middle
 Route::post('/login', [SessionController::class, 'authenticate'])->name('login')->middleware('guest');
 Route::get('/profile', [UserController::class, 'index'])->name('profile')->middleware('auth');
 Route::post('/logout', [sessionController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::get('/', function () {
+    return Inertia::render('Master', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+});
