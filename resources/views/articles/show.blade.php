@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
-{{$article->title}}
-@endsection
+@section('title', 'Lire l\'article' . $article->title)
 
 @section('content')
 
