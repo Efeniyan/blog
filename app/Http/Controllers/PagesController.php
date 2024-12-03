@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Inertia\Inertia;
+
 class PagesController extends Controller
 {
     public function index()
     {
-        return view('layouts.master');
+        return Inertia::render('Master');
     }
     
     public function contact()
